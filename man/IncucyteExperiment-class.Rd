@@ -5,6 +5,12 @@
 \alias{IncucyteExperiment-class}
 \alias{.IncucyteExpt}
 \title{The IncucyteExperiment Class}
+\arguments{
+\item{f}{A vector or list of file paths containing the observed Incuvyte
+data}
+
+\item{map}{File path to the PlateMap file}
+}
 \description{
 The IncucyteExperiment Class
 }

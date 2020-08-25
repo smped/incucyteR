@@ -10,5 +10,7 @@ Encoding: UTF-8
 Depends: 
   R (>= 4.0.0)
 Imports:
-  SummarizedExperiment
+  SummarizedExperiment,
+  forcats,
+  lubridate
 RoxygenNote: 7.1.1

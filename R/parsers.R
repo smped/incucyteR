@@ -1,19 +1,15 @@
-#' @title Parsing functions for Incucyte output and PlateMaps
-#'
-#' @description Parsing functions for Incucyte output and PlateMaps
-#'
-#' @param x File path for an Incucyte output file
-#'
+#' @title Parsing function for Incucyte output
+#' @description Parsing function for Incucyte output
+#' @param f File path for an Incucyte output file
 #' @return numeric matrix
-#'
 #' @keywords internal
-.parseIncucyte <- function(x){
+.parseIncucyte <- function(f){
 
-    # Basic checks
-    stopifnot(file.exist(x))
+    ## Basic checks
+    stopifnot(file.exists(f))
 
     ## Find where the data starts
-    ln <- readLines(x)
+    ln <- readLines(f)
     dataStarts <- grep("Date Time", ln)[[1]]
     stopifnot(length(dataStarts) == 1) # Stop if "Date Time" isn't found
     dataEnds <- length(ln)
@@ -28,5 +24,18 @@
     class(mat) <- "numeric"
 
     mat
+
+}
+
+#' @title Parsing function for Incucyte PlateMap
+#' @description Parsing function for Incucyte PlateMap
+#' @param f File path for an Incucyte PlateMap file
+#' @return numeric matrix
+#' @keywords internal
+.parsePlateMap <- function(f){
+
+    ## Basic checks
+    stopifnot(file.exists(f))
+
 
 }

@@ -1,0 +1,9 @@
+Package: incucyteR
+Version: 0.0.1
+Date: 2020/08/25
+Title: Process Incucyte Growth Curve Data
+Authors@R: person("Steve", "Pederson", 
+        email = "stephen.pederson.au@gmail.com", role = c("aut", "cre"))
+Description: Parse, analyse and visualise Incucyte growth curve data.
+License: LGPL3
+Encoding: UTF-8

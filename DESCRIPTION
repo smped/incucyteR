@@ -7,3 +7,8 @@ Authors@R: person("Steve", "Pederson",
 Description: Parse, analyse and visualise Incucyte growth curve data.
 License: LGPL3
 Encoding: UTF-8
+Depends: 
+  R (>= 4.0.0)
+Imports:
+  SummarizedExperiment
+RoxygenNote: 7.1.1

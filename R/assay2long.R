@@ -59,8 +59,9 @@ setMethod(
             cd <- tibble::rownames_to_column(cd, "sample")
             out <- left_join(out, cd, by = "sample")
         }
-        out
-
+        out <- cbind(rowData(x)[out[["Time"]],], out[setdiff(colnames(out), "Time")])
+        rownames(out) <- NULL
+        as.data.frame(out)
     }
 
 )

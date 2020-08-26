@@ -37,7 +37,7 @@
 #' @keywords internal
 #' @importFrom XML xmlParse xmlToList
 #' @importFrom dplyr bind_rows arrange
-.parsePlateMap <- function(f, value_sep = "/", .autoGroup = TRUE){
+.parsePlateMap <- function(f, .valueSep = "/", .autoGroup = TRUE){
 
     ## Import without modification
     stopifnot(file.exists(f))
@@ -56,7 +56,7 @@
     )
 
     ## The wells with metadata (i.e. not empty)
-    map <- lapply(allWells[hasMeta], .getWellItem, sep = value_sep)
+    map <- lapply(allWells[hasMeta], .getWellItem, sep = .valueSep)
     map <- do.call("rbind", map)
 
     ## Add the empty wells
@@ -86,8 +86,13 @@
             X = map[unique(hdr[,"type"])],
             MARGIN = 1,
             FUN = paste,
-            collapse = value_sep
+            collapse = .valueSep
         )
+        if (all(!grepl("NA", unique(unlist(map[unique(hdr[,"type"])]))))) {
+            ## If there are no text strings with an informative NA
+            ## convert any NA values to NA_character
+            map$Group <- gsub("NA.+", NA_character_, map$Group)
+        }
     }
 
     list(

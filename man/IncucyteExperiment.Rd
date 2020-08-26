@@ -5,7 +5,7 @@
 \alias{IncucyteExperiment-class}
 \title{The IncucyteExperiment Class}
 \usage{
-IncucyteExperiment(f, map, autoGroup = TRUE)
+IncucyteExperiment(f, map, autoGroup = TRUE, valueSep = "/")
 }
 \arguments{
 \item{f}{A vector or list of file paths containing the observed Incuvyte
@@ -14,7 +14,9 @@ data}
 \item{map}{File path to the PlateMap file}
 
 \item{autoGroup}{logical. If TRUE treatment groups will be automatically
-created from any PlateMap annotations. Ignored if not PlateMap is provided.}
+created from any PlateMap annotations. Ignored if not PlateMap is provided}
+
+\item{valueSep}{Text separator when combining values across treatment groups}
 }
 \description{
 The IncucyteExperiment Class

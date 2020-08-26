@@ -20,7 +20,8 @@
 #' data
 #' @param map File path to the PlateMap file
 #' @param autoGroup logical. If TRUE treatment groups will be automatically
-#' created from any PlateMap annotations. Ignored if not PlateMap is provided.
+#' created from any PlateMap annotations. Ignored if not PlateMap is provided
+#' @param valueSep Text separator when combining values across treatment groups
 #'
 #' @export
 #' @importFrom SummarizedExperiment SummarizedExperiment
@@ -29,7 +30,7 @@
 #' @importFrom lubridate parse_date_time
 #' @importFrom dplyr left_join
 #' @aliases IncucyteExperiment-class
-IncucyteExperiment <- function(f, map, autoGroup = TRUE) {
+IncucyteExperiment <- function(f, map, autoGroup = TRUE, valueSep = "/") {
 
     ## For each file in f, parse the cell counts and define as a matrix
     ## Pass any names in f as the assayNames
@@ -70,7 +71,9 @@ IncucyteExperiment <- function(f, map, autoGroup = TRUE) {
     ## Merge with plateMap data if provided
     mapData <- list(hdr = NULL, map = NULL, .attrs = NULL)
     if (!missing(map)){
-        mapData <- .parsePlateMap(map, .autoGroup = autoGroup)
+        mapData <- .parsePlateMap(
+            f = map, .autoGroup = autoGroup, .valueSep = valueSep
+        )
         cd <- left_join(as.data.frame(cd), mapData$map, by = c("row", "col"))
         cd <- DataFrame(cd)
         rownames(cd) <- assayCols

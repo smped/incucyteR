@@ -106,3 +106,27 @@ IncucyteExperiment <- function(f, map, autoGroup = TRUE, valueSep = "/") {
 #' @import methods
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
 .IncucyteExpt <- setClass("IncucyteExperiment", contains="SummarizedExperiment")
+
+setValidity2("IncucyteExperiment", function(object){
+
+    msg <- NULL
+    if (length(assays(object)) == 0) msg <- c(
+        msg, "At least one assay must be supplied"
+    )
+    if (!all(names(metadata(object)) == c("assays", "plateMap"))) msg <- c(
+        msg, "The metadata element must contain 'assays' and 'plateMap'"
+    )
+    ## May have to allow some wiggle room for image if people
+    ## use summarised data
+    reqCols <- c("image", "well", "nesting", "row", "col")
+    if (!all(reqCols %in% colnames(colData(object)))) msg <- c(
+        msg, paste("One of", reqCols, "is missing from colData")
+    )
+    reqRows <- c("Time", "Elapsed", "ElapsedScaled")
+    if (!all(reqRows %in% colnames(rowData(object)))) msg <- c(
+        msg, paste("One of", reqRows, "is missing from colData")
+    )
+    if (is.null(msg)) return(TRUE)
+    msg
+
+})

@@ -8,7 +8,7 @@ Description: Parse, analyse and visualise Incucyte growth curve data.
 License: file LICENSE
 Encoding: UTF-8
 Depends: 
-  R (>= 4.0.0),
+  R (>= 4.0.2),
   S4Vectors,
   SummarizedExperiment
 Imports:

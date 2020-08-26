@@ -9,7 +9,7 @@ License: file LICENSE
 Encoding: UTF-8
 Depends: 
   ggplot2,
-  R (>= 4.0.2),
+  R (>= 4.0.0),
   S4Vectors,
   SummarizedExperiment
 Imports:
@@ -17,5 +17,7 @@ Imports:
   forcats,
   lubridate,
   methods,
+  purrr,
+  tibble,
   XML
 RoxygenNote: 7.1.1

@@ -4,6 +4,7 @@
 \name{plotPlateMap}
 \alias{plotPlateMap}
 \alias{plotPlateMap,ANY-method}
+\alias{plotPlateMap,IncucyteExperiment-method}
 \title{Visualise the Incucyte PlateMap}
 \usage{
 plotPlateMap(
@@ -16,6 +17,15 @@ plotPlateMap(
 )
 
 \S4method{plotPlateMap}{ANY}(
+  x,
+  fill = "Group",
+  gridCol = "grey70",
+  gridSize = 0.25,
+  naCol = "white",
+  ...
+)
+
+\S4method{plotPlateMap}{IncucyteExperiment}(
   x,
   fill = "Group",
   gridCol = "grey70",

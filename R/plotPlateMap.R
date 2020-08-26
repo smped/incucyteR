@@ -19,6 +19,7 @@
 #'
 #' @import ggplot2
 #' @importFrom forcats fct_rev
+#' @importFrom S4Vectors metadata
 #'
 #' @name plotPlateMap
 #' @rdname plotPlateMap-methods
@@ -38,6 +39,8 @@ setMethod("plotPlateMap", signature = "ANY", function(x, ...){
     .errNotImp(x)
 }
 )
+#' @rdname plotPlateMap-methods
+#' @export
 setMethod(
     f = "plotPlateMap",
     signature = "IncucyteExperiment",

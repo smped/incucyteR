@@ -37,7 +37,7 @@
 #' @keywords internal
 #' @importFrom XML xmlParse xmlToList
 #' @importFrom dplyr bind_rows arrange
-.parsePlateMap <- function(f, value_sep = "/"){
+.parsePlateMap <- function(f, value_sep = "/", .autoGroup = TRUE){
 
     ## Import without modification
     stopifnot(file.exists(f))
@@ -79,6 +79,16 @@
 
     hdr <- do.call("rbind", plateMap$referenceItemManager$referenceItems)
     rownames(hdr) <- NULL
+
+    ## If automatically creating groups
+    if (.autoGroup){
+        map$Group <- apply(
+            X = map[unique(hdr[,"type"])],
+            MARGIN = 1,
+            FUN = paste,
+            collapse = value_sep
+        )
+    }
 
     list(
         hdr = hdr,

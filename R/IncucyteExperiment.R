@@ -3,26 +3,33 @@
 #' @description The IncucyteExperiment Class
 #'
 #' @details
-#' The IncucyteExperiment class extends the SummarizedExperiment class and is
-#' an S4 class
+#' The IncucyteExperiment class extends the S4 SummarizedExperiment class.
+#'
+#' As these experiments are time courses, rowData will contain the time
+#' information in POSIXct format, along with the Elapsed time from t0.
+#' A final column will contain the Elapsed time scaled to be on [0,1].
+#' This aids with model convergence during GLMM fitting
+#'
+#' If a PlateMap file is supplied, metadata from this will be incorporated into
+#' the colData element, otherwise colData will simply contain well IDs.
+#'
+#' Additionally if a PlateMap file is provided, the metadata element will
+#' contain the complete well information, including empty wells.
 #'
 #' @param f A vector or list of file paths containing the observed Incuvyte
 #' data
 #' @param map File path to the PlateMap file
+#' @param autoGroup logical. If TRUE treatment groups will be automatically
+#' created from any PlateMap annotations. Ignored if not PlateMap is provided.
 #'
-#' @export
-#' @import methods
-#' @importClassesFrom SummarizedExperiment SummarizedExperiment
-.IncucyteExpt <- setClass("IncucyteExperiment", contains="SummarizedExperiment")
-
 #' @export
 #' @importFrom SummarizedExperiment SummarizedExperiment
 #' @importFrom S4Vectors DataFrame
 #' @importFrom forcats fct_inorder
 #' @importFrom lubridate parse_date_time
 #' @importFrom dplyr left_join
-#' @importFrom tibble tibble
-IncucyteExperiment <- function(f, map) {
+#' @aliases IncucyteExperiment-class
+IncucyteExperiment <- function(f, map, autoGroup = TRUE) {
 
     ## For each file in f, parse the cell counts and define as a matrix
     ## Pass any names in f as the assayNames
@@ -63,7 +70,7 @@ IncucyteExperiment <- function(f, map) {
     ## Merge with plateMap data if provided
     mapData <- list(hdr = NULL, map = NULL, .attrs = NULL)
     if (!missing(map)){
-        mapData <- .parsePlateMap(map)
+        mapData <- .parsePlateMap(map, .autoGroup = autoGroup)
         cd <- left_join(as.data.frame(cd), mapData$map, by = c("row", "col"))
         cd <- DataFrame(cd)
         rownames(cd) <- assayCols
@@ -82,8 +89,8 @@ IncucyteExperiment <- function(f, map) {
         colData = cd,
         rowData = rd,
         metadata = list(
-            assay = assayHdr,
-            map = list(
+            assays = assayHdr,
+            plateMap = list(
                 hdr = DataFrame(mapData$hdr),
                 map = DataFrame(mapData$map)
             )
@@ -91,3 +98,8 @@ IncucyteExperiment <- function(f, map) {
     )
     .IncucyteExpt(se)
 }
+
+#' @export
+#' @import methods
+#' @importClassesFrom SummarizedExperiment SummarizedExperiment
+.IncucyteExpt <- setClass("IncucyteExperiment", contains="SummarizedExperiment")

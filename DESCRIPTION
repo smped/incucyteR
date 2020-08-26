@@ -5,7 +5,7 @@ Title: Process Incucyte Growth Curve Data
 Authors@R: person("Steve", "Pederson", 
         email = "stephen.pederson.au@gmail.com", role = c("aut", "cre"))
 Description: Parse, analyse and visualise Incucyte growth curve data.
-License: LGPL3
+License: file LICENSE
 Encoding: UTF-8
 Depends: 
   R (>= 4.0.0),
@@ -15,5 +15,6 @@ Imports:
   dplyr,
   forcats,
   lubridate,
+  methods,
   XML
 RoxygenNote: 7.1.1

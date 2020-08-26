@@ -17,8 +17,11 @@
 
 #' @export
 #' @importFrom SummarizedExperiment SummarizedExperiment
+#' @importFrom S4Vectors DataFrame
 #' @importFrom forcats fct_inorder
 #' @importFrom lubridate parse_date_time
+#' @importFrom dplyr left_join
+#' @importFrom tibble tibble
 IncucyteExperiment <- function(f, map) {
 
     ## For each file in f, parse the cell counts and define as a matrix
@@ -29,6 +32,8 @@ IncucyteExperiment <- function(f, map) {
         stop("All names for f must be either blank, or provided")
     names(f) <- nm
     vals <- lapply(f, .parseIncucyte)
+    assayHdr <- lapply(vals, function(x){x[["hdr"]]}) ## For the metadata
+    vals <- lapply(vals, function(x){x[["mat"]]})
     ## Ensure identical row & column names across assays
     stopifnot(.checkAssays(vals))
 
@@ -51,23 +56,38 @@ IncucyteExperiment <- function(f, map) {
     cd <- DataFrame(
         image, well,
         nesting = paste(well, image, sep = "_"),
-        plateRow, plateCol,
+        row = plateRow, col = as.integer(plateCol),
         row.names = assayCols
     )
 
-    ##############################
-    ## Merge with plateMap data ##
-    ##############################
+    ## Merge with plateMap data if provided
+    mapData <- list(hdr = NULL, map = NULL, .attrs = NULL)
+    if (!missing(map)){
+        mapData <- .parsePlateMap(map)
+        cd <- left_join(as.data.frame(cd), mapData$map, by = c("row", "col"))
+        cd <- DataFrame(cd)
+        rownames(cd) <- assayCols
+    }
 
     ## Set everything as factors after merging with the plateMap
-    ## There may be missing wells where no sample was run if we do this prior
     cd$image <- as.factor(cd$image)
     cd$well <- fct_inorder(cd$well)
     cd$nesting <- fct_inorder(cd$nesting)
-    cd$plateRow <- as.factor(cd$plateRow)
-    cd$plateCol <- as.factor(cd$plateCol)
+    cd$row <- as.factor(cd$row)
+    cd$col <- as.factor(cd$col)
 
     ## Form the basic Summarized Experiment & add the Incucyte class
-    se <- SummarizedExperiment(vals, colData = cd, rowData = rd)
+    se <- SummarizedExperiment(
+        assays = vals,
+        colData = cd,
+        rowData = rd,
+        metadata = list(
+            assay = assayHdr,
+            map = list(
+                hdr = DataFrame(mapData$hdr),
+                map = DataFrame(mapData$map)
+            )
+        )
+    )
     .IncucyteExpt(se)
 }

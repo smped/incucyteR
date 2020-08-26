@@ -8,9 +8,12 @@ Description: Parse, analyse and visualise Incucyte growth curve data.
 License: LGPL3
 Encoding: UTF-8
 Depends: 
-  R (>= 4.0.0)
+  R (>= 4.0.0),
+  S4Vectors,
+  SummarizedExperiment
 Imports:
-  SummarizedExperiment,
+  dplyr,
   forcats,
-  lubridate
+  lubridate,
+  XML
 RoxygenNote: 7.1.1

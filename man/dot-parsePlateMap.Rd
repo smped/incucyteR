@@ -4,7 +4,7 @@
 \alias{.parsePlateMap}
 \title{Parsing function for Incucyte PlateMap}
 \usage{
-.parsePlateMap(f)
+.parsePlateMap(f, value_sep = "/")
 }
 \arguments{
 \item{f}{File path for an Incucyte PlateMap file}

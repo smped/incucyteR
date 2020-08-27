@@ -16,7 +16,7 @@ assay2long(x, assay, addColData = TRUE, ...)
 \item{x}{An IncucyteExperiment object}
 
 \item{assay}{One or more of the assays contained in the IncucyteExperiment
-object}
+object. Defaults to all assays}
 
 \item{addColData}{logical. Include colData in the output}
 

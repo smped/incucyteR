@@ -19,5 +19,7 @@ Imports:
   methods,
   purrr,
   tibble,
+  tidyselect,
   XML
 RoxygenNote: 7.1.1
+biocViews: Infrastructure

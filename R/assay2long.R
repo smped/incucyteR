@@ -9,7 +9,7 @@
 #'
 #' @param x An IncucyteExperiment object
 #' @param assay One or more of the assays contained in the IncucyteExperiment
-#' object
+#' object. Defaults to all assays
 #' @param addColData logical. Include colData in the output
 #' @param ... not used
 #' @return A data.frame
@@ -17,7 +17,7 @@
 #' @importFrom purrr reduce
 #' @importFrom dplyr left_join
 #' @importFrom tibble rownames_to_column
-#' @importFrom SummarizedExperiment assay assayNames colData
+#' @importFrom SummarizedExperiment assay assayNames colData rowData
 #'
 #' @name assay2long
 #' @rdname assay2long-methods
@@ -41,6 +41,8 @@ setMethod(
     signature = "IncucyteExperiment",
     definition = function(x, assay, addColData = TRUE){
 
+        ## Default to all
+        if (missing(assay)) assay <- assayNames(x)
         if(!all(assay %in% assayNames(x))) stop("Incorrect assayName provided")
         dfs <- lapply(assay, function(y){
             vals <- assay(x, y)

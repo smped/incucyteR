@@ -20,23 +20,3 @@
     if (!all(chkRows)) stop("Assay row names do not match")
     TRUE
 }
-
-#' @title Check supplied aesthetics are valid for the IncucyteExperiment
-#' @param aes A ggplot aesthetic
-#' @param x The IncucyteExperiment object to be plotted
-#' @return logical(1)
-#' @keywords internal
-.checkAes <- function(aes, x){
-
-    is_aes <- all(
-        uneval = is(aes, "uneval"),
-        vapply(aes, is, logical(1), class2 = "quosure")
-    )
-    cols <- vapply(
-        X = aes,
-        FUN = function(x){attributes(terms(x))$term.labels},
-        FUN.VALUE = character(1)
-    )
-    in_data <- all(cols %in% colnames(colData(x)))
-    return(all(is_aes, in_data))
-}

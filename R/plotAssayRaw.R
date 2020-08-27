@@ -62,6 +62,7 @@ setMethod(
             assay <- assay[[1]]
         }
         df <- assay2long(x, assay)
+        image <- c() # Avoids R CMD error
         ggplot(df, aes_string(x = "Elapsed", y = assay, ...)) +
             geom_line(aes(group = image)) +
             facet +

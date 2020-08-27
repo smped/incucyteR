@@ -6,39 +6,21 @@
 \alias{plotAssayMerged,IncucyteExperiment-method}
 \title{Plot the assayData merged across replicate wells}
 \usage{
-plotAssayMerged(
-  x,
-  assay,
-  point_aes,
-  line_aes,
-  trans = "log10",
-  pointsize = 1/3
-)
+plotAssayMerged(x, assay, ..., trans = "log10", pointsize = 1/3)
 
-\S4method{plotAssayMerged}{ANY}(x)
+\S4method{plotAssayMerged}{ANY}(x, assay, ..., trans = "log10", pointsize = 1/3)
 
-\S4method{plotAssayMerged}{IncucyteExperiment}(
-  x,
-  assay,
-  point_aes,
-  line_aes,
-  trans = "log10",
-  pointsize = 1/3
-)
+\S4method{plotAssayMerged}{IncucyteExperiment}(x, assay, ..., trans = "log10", pointsize = 1/3)
 }
 \arguments{
 \item{x}{An IncucyteExperiment object}
 
 \item{assay}{The assay to be visualised}
 
-\item{point_aes}{Plotting aesthetics for points.
-Any aesthetics must refer to columns in the colData slot of x.
-Any aesthetics provided here will become the grouping categories for
-calculating and plotting the mean+se of each category.
-Must be specified.}
-
-\item{line_aes}{Plotting aesthetics for lines.
-If not provided will default to the same as point_aes}
+\item{...}{Passed to \code{aes_string()}. If no colour, linetype or other
+grouping category is provided, the plot will simply be a summary of all
+points in all wells. Any provided categories must correspond to columns
+contained in the colData slot of \code{x}}
 
 \item{trans}{The transformation for the y-axis}
 

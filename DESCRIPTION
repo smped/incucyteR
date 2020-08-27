@@ -23,3 +23,5 @@ Imports:
   XML
 RoxygenNote: 7.1.1
 biocViews: Infrastructure
+VignetteBuilder: knitr
+Suggests: BiocStyle, knitr, rmarkdown

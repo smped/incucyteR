@@ -1,0 +1,44 @@
+---
+title: "IncucyteExperiment: Introduction"
+author:
+- name: Stephen Pederson
+  affiliation: Dame Roma Mitchell Cancer Research Laboratories, University of Adelaide
+  email: stephen.pederson.au@gmail.com
+package: incucyteR
+output:
+  BiocStyle::html_document
+abstract: |
+  How to Import and Visualise Incucyte Data
+vignette: |
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+# Introduction
+
+The `r Githubpkg("steveped/incucyteR")` package is designed to enable easy 
+import, visualisation and analysis of Incucyte data. This package is primarily 
+focussed on assays that measure either cell growth or cell death.
+
+# Importing Data
+
+`incucyteR` can import multiple assays as well as the PlateMap files 
+directly exported by the Incucyte software. Any CellType, GrowthCondition or 
+other metadata included in the PlateMap will be added to the data object 
+during import, and a well documented PlateMap can significantly simplify 
+analysis.
+
+Data will be imported as an `IncucyteExperiment` object, which is based on the
+`r Biocpkg("SummarizedExperiment")` object class.
+
+##
+
+
+
+# Session info {.unnumbered}
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```

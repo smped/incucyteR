@@ -3,4 +3,6 @@
 .RData
 .Ruserdata
 *.Rproj
+vignettes/*html
+vignettes/*R
 scrappyNotes.R
